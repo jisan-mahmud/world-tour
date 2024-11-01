@@ -8,13 +8,25 @@ const Countries = () => {
         .then(response => response.json())
         .then(json => setCountries(json))
     }, [])
+
+    let [visitedCountries, setVisitedCountries] = useState([])
+
+    let handleVisitedCountries = (country) => {
+        if (!visitedCountries.find((item) => item === country)){
+            setVisitedCountries([...visitedCountries, country])
+        }else{
+            setVisitedCountries(visitedCountries.filter((item) => item !== country));
+        }
+    }
+
     return (
         <div>
-            <b>All countries</b>
+            <b>All countries</b><br/>
+            <b>Visited Countries: {visitedCountries.length}</b>
             <div className="countries">
                 {
                     countries.map((country, index) => (
-                        <Country key= {index} country= {country}></Country>
+                        <Country handleVisitedCountries={handleVisitedCountries} key= {index} country= {country}></Country>
                     ))
                 }
             </div>
